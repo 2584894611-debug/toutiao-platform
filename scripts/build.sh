@@ -228,7 +228,9 @@ fi
 # ─────────────────────────────────────────────────────────────
 echo "[build] step 3/4: pnpm next build ..."
 STEP_TS=$(date +%s)
-if ! run_with_timeout 360 pnpm next build; then
+NEXT_BUILD_FLAGS="${NEXT_BUILD_FLAGS:-}"
+echo "[build]   flags: ${NEXT_BUILD_FLAGS}"
+if ! run_with_timeout 360 pnpm next build ${NEXT_BUILD_FLAGS}; then
     echo "[build] FATAL: next build failed"
     exit 1
 fi
