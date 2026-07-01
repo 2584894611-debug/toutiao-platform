@@ -1,4 +1,4 @@
-FROM sansanfox-geo:latest AS deps
+FROM node:24-alpine AS deps
 
 WORKDIR /app
 
@@ -18,10 +18,12 @@ FROM deps AS builder
 COPY . .
 ENV COZE_PROJECT_ENV=PROD
 ENV NODE_ENV=
+ENV NODE_OPTIONS=--max-old-space-size=1024
+ENV NEXT_TELEMETRY_DISABLED=1
 ENV SKIP_CHROMIUM_PRELOAD=1
 RUN pnpm run build
 
-FROM sansanfox-geo:latest AS runner
+FROM node:24-alpine AS runner
 
 WORKDIR /app
 
